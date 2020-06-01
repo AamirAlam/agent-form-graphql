@@ -48,7 +48,7 @@ type rootQuery {
 }
 
 type rootMutation {
-    submitForm(formInput: FormInput): FormResponse!
+    submitForm(formInput: FormInput): SubmitResponse!
 }
 
 schema {

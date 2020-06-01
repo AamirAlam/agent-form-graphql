@@ -24,7 +24,7 @@ module.exports = {
               const saved_response = new FormResponse(form_response);
               await saved_response.save();
       
-              return {...saved_response._doc};  
+              return {success:true, message: "Your request has been sent!"};  
         } catch (error) {
             console.log(error.message)
             return {
