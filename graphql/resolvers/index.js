@@ -8,6 +8,15 @@ module.exports = {
         var forms = await Form.find().lean();    
         return forms;
     },
+    getFormById: async ({id}) => {
+         try {
+             console.log(id)
+           const form  = await Form.findById(id).lean();
+           return form;     
+         } catch (error) {
+             console.log(error.message);
+         }   
+    } ,
     submitForm: async (args) =>{
         
         try {

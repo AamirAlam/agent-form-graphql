@@ -74,6 +74,7 @@ class JobListingPage extends Component {
 
   openDetailPage(form_id) {
      console.log(form_id); 
+     this.props.history.push('/detail', { id: form_id });
   }
 
   openForm = (formId) => {
@@ -97,6 +98,7 @@ class JobListingPage extends Component {
         maxWidth: 800,
         maxheight: 400,
         width: 800,
+        backgroundColor:'#eeeeee'
       },
       cardrow: {
         border: "1px solid #000000",
@@ -140,21 +142,23 @@ class JobListingPage extends Component {
         <NavBar />
         <Grid
           container
-          spacing={0}
+          spacing={5}
           direction="column"
           alignItems="center"
           justify="center"
           
-          style={{ minHeight: "100vh", padding:"10px" }}
+          style={{ minHeight: "50vh", padding:"10px" }}
         >
           
           {this.state.forms.length == 0 ?
            <CircularProgress />  : 
            this.state.forms.map(form_item => (
-            <Grid item xs={8}>
+            <Grid item xs={8} key={form_item._id}>
             <Card style={styles.card}>
               <CardHeader
-                action={<Button style={{ padding: 10 }} onClick = {() => this.openDetailPage(form_item._id)}>Apply Now</Button>}
+                action={<Button style={{ padding: 10 }} onClick = {() => this.openDetailPage(form_item._id)}>
+                  <Link to="detail" ></Link>
+                   Apply Now</Button>}
                 title={form_item.title}
                 subheader={form_item.salary + "  CTC"}
               />

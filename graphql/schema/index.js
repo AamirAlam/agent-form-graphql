@@ -45,6 +45,7 @@ type SubmitResponse {
 
 type rootQuery {
     forms: [Form!]!
+    getFormById(id: String!): Form   
 }
 
 type rootMutation {
