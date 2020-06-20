@@ -21,13 +21,22 @@ class JobDetailPage extends Component {
     super(props);
   }
 
-  handleChange = name => event => {
-    this.setState({
-      [name]: event.target.value
-    });
-  };
-
+  onChange = e =>
+  this.setState({
+    [e.target.name]: e.target.value
+  });
   
+  onSubmit = e => {
+    e.preventDefault();
+    const request_payload = {
+      name: this.state.name,
+      email: this.state.email,
+      phone: this.state.phone,
+      photo: this.state.photo,
+      document: this.state.document,
+    };
+    console.log(request_payload)
+  };
 
   componentDidMount() {
     const { state } = this.props.history.location;
@@ -82,87 +91,155 @@ class JobDetailPage extends Component {
   }
 
 
-  handleFormSubmit() {
-    console.log(this.state)
-  }
 
   componentWillUnmount() {
     this.isActive = false;
   }
 
   render() {
+    let errors={}
+    const styles = {
+      bullet: {
+        // display: "inline-block",
+        // margin: "0 2px",
+        // transform: "scale(0.8)"
+      },
+      title: {
+        // paddingTop: 10,
+        // fontSize: 22,
+        // color: "#000000"
+      },
+      pos: {
+        // marginBottom: 12
+      },
+      textField: {
+        marginLeft: 10,
+        marginRight: 10,
+        width: "90%",
+        height: 50
+      },
+      button: {
+        margin: 4,
+        backgroundColor: "#ffffff"
+      },
+      buttonLogin: {
+        margin: 4,
+        backgroundColor: "#0078BB",
+        color: "#ffffff"
+      },
+      buttonLoginDisabled: {
+        margin: 4,
+        backgroundColor: "rgba(0, 0, 0, 0.12)",
+        color: "rgba(0, 0, 0, 0.26)"
+      },
+      paper: {
+        // textAlign: "center",
+        // marginTop: 100,
+        // overflow: "hidden",
+        // padding: 10,
+        // borderRadius: 7
+      },
+      formControl: {
+        margin: 15,
+        width: "95%"
+      }
+    };
+
     return (
-      <React.Fragment>
+      <div>
         <NavBar/>
         {
     this.state.form == null || this.state.form == undefined ?
      <CircularProgress/> : 
-     <Grid container  
-     spacing={0}
-     direction="column"
-     alignItems="center"
-     justify="center"
-     style={{ minHeight: "50vh", padding:"10px" }}>
-     <Grid item xs={12}>
-       <form>
-         <Grid item xs={12}>
-           <Typography
-             gutterBottom
-             variant="title"
-           >
-             {this.state.form.title}
-           </Typography>
+       <Grid container spacing={0}>
+         <Grid item lg={4} sm={12} xs={12}></Grid>
+         <Grid item lg={4} sm={12} xs={12}>
+
+         <form autoComplete="off" className="text-center " onSubmit={this.onSubmit}>
+          <div style={{ paddingTop: 50, paddingBottom: 100 }}>
+                  <TextField
+                      id="outlined-name"
+                      type="text"
+                      name="name"
+                      value={this.state.name}
+                      onChange={this.onChange}
+                      error={errors.name}
+                      label="Name"
+                      style={styles.textField}
+                      margin="none"
+                      autoComplete="name"
+                    />
+                    <TextField
+                      id="outlined-name"
+                      name="email"
+                      type="email"
+                      value={this.state.email}
+                      onChange={this.onChange}
+                      error={errors.email}
+                      label="Email"
+                      style={styles.textField}
+                      margin="none"
+                    />
+            
+                    <TextField
+                      id="outlined-name"
+                      name="phone"
+                      type="number"
+                      value={this.state.phone}
+                      onChange={this.onChange}
+                      error={errors.password}
+                      label="Phone"
+                      style={styles.textField}
+                      margin="none"
+                    />
+                    <TextField
+                      id="outlined-name"
+                      name="photo"
+                      type="file"
+                      label="Photo"
+                      value={this.state.photo}
+                      onChange={this.onChange}
+                      error={errors.photo}
+                      style={styles.textField}
+                      margin="none"
+                    />
+
+                    <TextField
+                      id="outlined-name"
+                      name="document"
+                      type="file"
+                      label="Document"
+                      value={this.state.document}
+                      onChange={this.onChange}
+                      error={errors.document}
+                      style={styles.textField}
+                      margin="none"
+                    />
+             
+                    <div className="m-b-lg" style={{ paddingTop: "10px" }}>
+                      <Button variant="contained" onClick={this.onStepBackward} >
+                        Back
+                      </Button>
+
+                      <Button
+                        variant="contained"
+                        color="primary"
+                        value="submit"
+                        type="submit"
+                        name="submit"
+                      >
+                        Apply For agent
+                      </Button>
+                    </div>
+          </div>
+              
+           
+              </form>
          </Grid>
-         <Grid item >
-           <TextField
-             label="Full Name"
-             handleChange={this.handleChange("name")}
-             value={this.state.name}
-             type="text"
-           />
-         </Grid>
-         <Grid item >
-           <TextField
-             label="Email address"
-             handleChange={this.handleChange("email")}
-             value={this.state.email}
-           />
-         </Grid>
-         <Grid item >
-           <TextField
-             label="Phone"
-             handleChange={this.handleChange("phone")}
-             value={this.state.phone}
-           />
-         </Grid>
-         <Box m={2} />
-         <label>Uplaod your photo</label>
-         <Grid item >
-           <TextField
-             type ="file"
-             value={this.state.photo}
-             handleChange={this.handleChange("photo")}
-           />
-          
-         </Grid>
-         <Box m={2} />
-         <label>Uplaod your document</label>
-         <Grid item >
-           <TextField
-             type ="file"
-             value={this.state.document}
-             handleChange={this.handleChange("photo")}
-           />
-         </Grid>
-         <Box m={2} />
-         <Grid item >
-           <Button variant="contained" color="primary" onClick={this.handleFormSubmit}>Submit application</Button>
-         </Grid>
-       </form>
-     </Grid>
-   </Grid>
+         <Grid item lg={4} sm={12} xs={12}></Grid>
+       </Grid>   
     }
-      </React.Fragment>
+      </div>
     );
   }
 }
